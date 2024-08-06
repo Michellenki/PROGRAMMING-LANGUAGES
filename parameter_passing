@@ -1,0 +1,76 @@
+   program to demonstrate parameter passing
+#include <stdio.h>
+#include <stdlib.h>
+
+void passByValue (int value);
+void passByReference (int *reference);
+void passByArray (int array[], int size);
+
+int main() {
+    int a = 10;
+    int b = 20;
+    int c[5] = {1, 2, 3, 4, 5};
+
+    printf("Initial values:\n");
+    printf("a = %d\n", a);
+    printf("b = %d\n", b);
+    printf("c = {");
+    for (int i = 0; i < 5; i++) {
+        printf("%d", c[i]);
+        if (i < 4) printf(", ");
+    }
+    printf("}\n\n");
+
+    printf("Calling pass by value(a):\n");
+    passByValue(a);
+    printf("After pass by value(a), a = %d\n\n", a);
+
+    printf("Calling pass by reference(&b):\n");
+    passByReference(&b);
+    printf("After pass by reference(&b), b = %d\n\n");
+
+    printf("Calling pass by array(c, 5):\n");
+    passByArray(c, 5);
+    printf("After pass by array(c, 5), c = {");
+    for (int i = 0; i < 5; i++) {
+        printf("%d", c[i]);
+        if (i < 4) printf(", ");
+    }
+    printf("}\n");
+
+    return 0;
+}
+
+void passByValue(int value) {
+    printf("Inside pass by value, value = %d\n", value);
+    value = 50;
+    printf("Inside pass by value after change, value = %d\n", value);
+}
+
+void passByReference(int *reference) {
+    printf("Inside pass by reference, *reference = %d\n", *reference);
+    *reference = 100;
+    printf("Inside pass by reference after change, *reference = %d\n", *reference);
+}
+
+void passByArray(int array[], int size) {
+    printf("Inside pass by array, array = {");
+    for (int i = 0; i < size; i++) {
+        printf("%d", array[i]);
+        if (i < size - 1) printf(", ");
+    }
+    printf("}\n");
+
+    for (int i = 0; i < size; i++) {
+        array[i] *= 2;
+    }
+
+    printf("Inside pass by array after change, array = {");
+    for (int i = 0; i < size; i++) {
+        printf("%d", array[i]);
+        if (i < size - 1) printf(", ");
+    }
+    printf("}\n");
+}
+
+

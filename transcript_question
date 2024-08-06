@@ -1,0 +1,55 @@
+mport csv
+
+def assign_grade(mark):
+    if mark >= 70:
+        return 'A'
+    elif mark >= 60:
+        return 'B'
+    elif mark >= 50:
+        return 'C'
+    elif mark >= 40:
+        return 'D'
+    else:
+        return 'F'
+
+def process_marks(students):
+    total_marks = 0
+    total_grade_points = 0
+    total_students = len(students)
+
+    for student in students:
+        grade = assign_grade(student['marks'])
+        student['grade'] = grade
+        total_marks += student['marks']
+        total_grade_points += ord('A') - ord(grade)
+
+    mean_marks = total_marks / total_students
+    mean_grade = chr(ord('A') - (total_grade_points // total_students))
+
+    return mean_marks, mean_grade
+
+def generate_transcript(students, filename='transcript.csv'):
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=['name', 'marks', 'grade'])
+        writer.writeheader()
+        writer.writerows(students)
+
+def main():
+    students = [
+        {'name': 'John Doe', 'marks': 85},
+        {'name': 'Jane Smith', 'marks': 58},
+        {'name': 'Emily Davis', 'marks': 72},
+        {'name': 'Michael Brown', 'marks': 49},
+        {'name': 'Jessica White', 'marks': 91}
+    ]
+
+    mean_marks, mean_grade = process_marks(students)
+    generate_transcript(students)
+
+    print(f'Mean Marks: {mean_marks:.2f}')
+    print(f'Mean Grade: {mean_grade}')
+    print('Transcript generated as transcript.csv')
+
+if __name__ == '__main__':
+    main()
+
